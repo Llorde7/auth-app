@@ -19,7 +19,7 @@ export class AuthService {
     
     async signup(signupData: SignupDto){
         
-        const { email, password, name } = signupData;
+        const { email, password, name, phone } = signupData;
 
         //Check if email is in use 
         const emailInUse = await this.UserModel.findOne({ email: signupData.email })
@@ -31,11 +31,15 @@ export class AuthService {
         const hashedPassword = await bcrypt.hash(password, 10);
 
         //Create user document and save in mongodb
-        await this.UserModel.create({
+        const newUSer = await this.UserModel.create({
             name,
             email,
             password: hashedPassword,
+            phone,
         });
+
+        await newUSer.save();
+        return { message: 'User registered successfully'}
         
     }
 

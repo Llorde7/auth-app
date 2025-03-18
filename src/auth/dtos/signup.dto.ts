@@ -1,4 +1,4 @@
-import { IsEmail, IsString, Matches, MinLength  } from "class-validator";
+import { IsEmail, IsString, Matches, MinLength, IsPhoneNumber  } from "class-validator";
 
 
 export class SignupDto {
@@ -12,5 +12,8 @@ export class SignupDto {
     @MinLength(6)
     @Matches(/^(?=.*[0-9])/, {message: 'Password must contain at least one hour'})
     password: string;
+
+    @IsPhoneNumber()
+    phone: string;
   }
   
